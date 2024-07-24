@@ -1,0 +1,107 @@
+name: geolocation-ci-release
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  APPLICATION_PORT: 3000
+  APPLICATION_HOST: geolocation_api
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./application
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Setup ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2.2'
+          bundler-cache: true
+      - name: Check ruby version
+        run:  |
+          ruby -v
+          which ruby
+          gem install bundler
+      - name: Install gems
+        run: |
+          bundle config set --local deployment true
+          bundle install -j $(nproc)
+      - name: Create temporary env files
+        run: |
+          mkdir .envs
+          mv ../.env-example .envs/.env.test
+          cp .envs/.env.test .envs/.env.production
+      - name: Check the application code
+        run: |
+          RAILS_ENV=production bundle exec rails routes
+      - name: Run lint
+        run: |
+          RAILS_ENV=test bundle exec rubocop -d
+
+  test:
+    runs-on: ubuntu-latest
+    needs: lint
+    services:
+      postgresdb:
+        image: postgres:16.1
+        ports:
+          - "5432"
+        env:
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+          --name postgresdb
+          --hostname postgresdb
+    defaults:
+      run:
+        working-directory: ./application
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build
+        uses: docker/build-push-action@v5
+        with:
+          file: ./Dockerfile
+          context: .
+          tags: geolocation:latest
+          outputs: type=docker,dest=/tmp/myimage.tar
+      - name: Create connection between services
+        run: |
+          docker network create backend
+          docker network connect backend postgresdb
+      - name: Load the image
+        run: |
+          docker load --input /tmp/myimage.tar
+      - name: Create the database
+        run: |
+          docker run \
+            --network=backend \
+            --env-file ../.env-example \
+            -p ${{ env.APPLICATION_PORT }}:${{ env.APPLICATION_PORT }} \
+            --rm \
+            geolocation:latest \
+            bundle exec rails db:migrate
+      - name: Run tests
+        run: |
+          docker run \
+            --network=backend \
+            --env-file ../.env-example \
+            -p ${{ env.APPLICATION_PORT }}:${{ env.APPLICATION_PORT }} \
+            --rm \
+            geolocation:latest \
+            bundle exec rspec spec --fail-fast=1 --format d
