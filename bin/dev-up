@@ -9,4 +9,5 @@ then
   exit 1
 fi
 
-docker-compose -f "$PROJECT_DIR/docker-compose.yml" -p geolocation --project-directory $PROJECT_DIR exec web bundle exec rspec --fail-fast=1 $@
+docker-compose -f "$PROJECT_DIR/docker-compose.yml" -p geolocation --project-directory $PROJECT_DIR down
+docker-compose -f "$PROJECT_DIR/docker-compose.yml" -p geolocation --project-directory $PROJECT_DIR up
