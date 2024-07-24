@@ -57,15 +57,15 @@ Communication with this application requires providing the `Authorization` heade
 
 #### Running the Application
 
-First, run the command to build the application image:
+First we need to create the `.env` file from the `.env-example` file.
+All environment variables work as usual, except for `IP_STACK_ACCESS_KEY`, which should be replaced with the token obtained from the https://ipstack.com platform.
+
+Once the `.env` file is created, you can build the application image running the following command:
 ```
 ./bin/dev-build
 ```
 
-After that, create the `.env` file from the `.env-example` file.
-All environment variables work as usual, except for `IP_STACK_ACCESS_KEY`, which should be replaced with the token obtained from the https://ipstack.com platform.
-
-Once the `.env` file is created, you can start the application with the command:
+And after that, you can start the application with the command:
 ```
 ./bin/dev-start
 ```
