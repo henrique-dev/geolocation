@@ -63,13 +63,13 @@ RSpec.describe '/api/v1/locations', type: :request, vcr: { match_requests_on: %i
                 },
                 required: %i[data]
 
-          context 'with an ip as ip_or_url' do
+          context 'with an ip as address' do
             let(:location_params) { { ip: '134.201.250.155' } }
 
             run_test!
           end
 
-          context 'with an url as ip_or_url' do
+          context 'with an url as address' do
             let(:location_params) { { url: 'www.positrace.com' } }
 
             run_test!
@@ -90,9 +90,9 @@ RSpec.describe '/api/v1/locations', type: :request, vcr: { match_requests_on: %i
                 errors: {
                   type: :object,
                   properties: {
-                    ip_or_url: { type: :array, items: { type: :string } }
+                    address: { type: :array, items: { type: :string } }
                   },
-                  required: %i[ip_or_url]
+                  required: %i[address]
                 }
               },
               required: %i[errors]

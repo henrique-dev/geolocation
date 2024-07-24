@@ -6,7 +6,7 @@ module Locations
     end
 
     rule(:ip, :url) do
-      key(:ip_or_url).failure('ip or url must be filled') if values[:ip].nil? && values[:url].nil?
+      key(:address).failure('ip or url must be filled') if values[:ip].nil? && values[:url].nil?
     end
 
     rule(:ip) do

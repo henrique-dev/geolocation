@@ -1,8 +1,20 @@
 module Api
   module V1
     class LocationsController < ApplicationController
-      before_action :set_ip_or_url, only: %i[show destroy]
+      before_action :set_address, only: %i[show destroy]
       before_action :set_location, only: %i[show destroy]
+
+      def index
+        @locations = Location.filter_by(filter_params)
+        @locations_per_page = @locations.page(params[:page])
+        render(json: LocationSerializer.new(@locations_per_page, {
+          meta: {
+            total_pages: @locations_per_page.total_pages,
+            records: @locations.count,
+            current_page: @locations_per_page.current_page
+          }
+        }), status: :ok)
+      end
 
       def show
         render(json: LocationSerializer.new(@location), status: :ok)
@@ -30,16 +42,16 @@ module Api
 
       private
 
-      def set_ip_or_url
-        return @ip = params[:ip_or_url] if Location.address_is_ip?(params[:ip_or_url])
-        return @url = params[:ip_or_url] if Location.address_is_url?(params[:ip_or_url])
+      def set_address
+        return @ip = params[:address] if Location.address_is_ip?(params[:address])
+        return @url = params[:address] if Location.address_is_url?(params[:address])
 
         render(json: {}, status: :bad_request)
       end
 
       def set_location
-        @location = Location.find_by(ip: @ip) if @ip.present?
-        @location = Location.find_by(url: @url) if @url.present?
+        @location = Location.from_ip(@ip).current if @ip.present?
+        @location = Location.from_url(@url).current if @url.present?
 
         return if @location.present?
 
@@ -47,6 +59,10 @@ module Api
       end
 
       def post_params
+        params.permit(:ip, :url)
+      end
+
+      def filter_params
         params.permit(:ip, :url)
       end
     end

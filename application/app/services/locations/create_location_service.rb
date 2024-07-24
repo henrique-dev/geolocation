@@ -12,7 +12,7 @@ module Locations
 
     def create_location(params)
       service_response = Providers::IpStack::FillLocationService.call(
-        location: Location.new, ip_or_url: params[:ip] || params[:url]
+        location: Location.new, address: params[:ip] || params[:url]
       )
 
       if service_response.success

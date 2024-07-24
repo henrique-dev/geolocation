@@ -107,7 +107,7 @@ paths:
                   errors:
                     type: object
                     properties:
-                      ip_or_url:
+                      address:
                         type: array
                         items:
                           type: string
@@ -134,7 +134,119 @@ paths:
                 url:
                   type: string
               required: []
-  "/api/v1/locations/{ip_or_url}":
+    get:
+      summary: Retrieve locations
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+      parameters:
+      - name: ip
+        in: query
+        schema:
+          type: string
+      - name: url
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: location found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        type:
+                          type: string
+                        attributes:
+                          type: object
+                          properties:
+                            ip:
+                              type: string
+                            url:
+                              type: string
+                            kind:
+                              type: string
+                            continent_code:
+                              type: string
+                            continent_name:
+                              type: string
+                            country_code:
+                              type: string
+                            country_name:
+                              type: string
+                            region_code:
+                              type: string
+                            region_name:
+                              type: string
+                            city:
+                              type: string
+                            zip:
+                              type: string
+                            latitude:
+                              type: string
+                            longitude:
+                              type: string
+                            location:
+                              type: object
+                            time_zone:
+                              type: object
+                            currency:
+                              type: object
+                            created_at:
+                              type: string
+                            updated_at:
+                              type: string
+                          required:
+                          - ip
+                          - url
+                          - kind
+                          - continent_code
+                          - continent_name
+                          - country_code
+                          - country_name
+                          - region_code
+                          - region_name
+                          - city
+                          - zip
+                          - latitude
+                          - longitude
+                          - location
+                          - time_zone
+                          - currency
+                          - created_at
+                          - updated_at
+                      required:
+                      - id
+                      - type
+                      - attributes
+                  meta:
+                    type: object
+                    properties:
+                      total_pages:
+                        type: integer
+                      records:
+                        type: integer
+                      current_page:
+                        type: integer
+                    required:
+                    - total_pages
+                    - records
+                    - current_page
+                required:
+                - data
+                - meta
+        '401':
+          description: not authorized
+  "/api/v1/locations/{address}":
     delete:
       summary: Destroy a location
       tags:
@@ -142,7 +254,7 @@ paths:
       security:
       - ApiKeyAuth: []
       parameters:
-      - name: ip_or_url
+      - name: address
         in: path
         required: true
         schema:
@@ -231,13 +343,13 @@ paths:
         '404':
           description: not found
     get:
-      summary: Retrieve a location
+      summary: Retrieve the last location
       tags:
       - Locations
       security:
       - ApiKeyAuth: []
       parameters:
-      - name: ip_or_url
+      - name: address
         in: path
         required: true
         schema:

@@ -1,19 +1,24 @@
 require 'swagger_helper'
 
-RSpec.describe '/api/v1/locations/{ip_or_url}', type: :request do
-  let(:location) { create(:location) }
-  let(:ip_or_url) { location.ip }
+RSpec.describe '/api/v1/locations/{address}', type: :request do
+  let(:location) { create(:location, created_at: DateTime.now) }
+  let(:address) { location.ip }
   let(:Authorization) { ENV['SERVICE_ACCESS_KEY'] }
 
-  path '/api/v1/locations/{ip_or_url}' do
-    get 'Retrieve a location' do
+  before do
+    create(:location, ip: location.ip, url: location.url, created_at: DateTime.now - 10.days)
+    create(:location, ip: location.ip, url: location.url, created_at: DateTime.now - 20.days)
+  end
+
+  path '/api/v1/locations/{address}' do
+    get 'Retrieve the last location' do
       tags 'Locations'
 
       produces 'application/json'
 
       security [ApiKeyAuth: []]
 
-      parameter name: :ip_or_url, in: :path, type: :string
+      parameter name: :address, in: :path, type: :string
 
       context 'with valid arguments' do
         response '200', 'location found' do
@@ -56,16 +61,22 @@ RSpec.describe '/api/v1/locations/{ip_or_url}', type: :request do
                 },
                 required: %i[data]
 
-          context 'with an ip as ip_or_url' do
-            let(:ip_or_url) { location.ip }
+          context 'with an ip as address' do
+            let(:address) { location.ip }
 
-            run_test!
+            run_test! do |response|
+              data = JSON.parse(response.body)
+              expect(data['data']['id']).to eq(location.id)
+            end
           end
 
-          context 'with an url as ip_or_url' do
-            let(:ip_or_url) { location.url }
+          context 'with an url as address' do
+            let(:address) { location.url }
 
-            run_test!
+            run_test! do |response|
+              data = JSON.parse(response.body)
+              expect(data['data']['id']).to eq(location.id)
+            end
           end
         end
       end
@@ -78,7 +89,7 @@ RSpec.describe '/api/v1/locations/{ip_or_url}', type: :request do
         end
 
         response '404', 'not found' do
-          let(:ip_or_url) { ['255.255.255.255', 'domain.not.created.com'].sample }
+          let(:address) { ['255.255.255.255', 'domain.not.created.com'].sample }
 
           run_test!
         end
