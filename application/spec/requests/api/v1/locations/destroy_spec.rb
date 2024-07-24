@@ -1,11 +1,11 @@
 require 'swagger_helper'
 
-RSpec.describe '/api/v1/locations/{ip_or_url}', type: :request do
+RSpec.describe '/api/v1/locations/{address}', type: :request do
   let(:location) { create(:location) }
-  let(:ip_or_url) { location.ip }
+  let(:address) { location.ip }
   let(:Authorization) { ENV['SERVICE_ACCESS_KEY'] }
 
-  path '/api/v1/locations/{ip_or_url}' do
+  path '/api/v1/locations/{address}' do
     delete 'Destroy a location' do
       tags 'Locations'
 
@@ -13,7 +13,7 @@ RSpec.describe '/api/v1/locations/{ip_or_url}', type: :request do
 
       security [ApiKeyAuth: []]
 
-      parameter name: :ip_or_url, in: :path, type: :string
+      parameter name: :address, in: :path, type: :string
 
       context 'with valid arguments' do
         response '200', 'location destroyed' do
@@ -56,14 +56,14 @@ RSpec.describe '/api/v1/locations/{ip_or_url}', type: :request do
                 },
                 required: %i[data]
 
-          context 'with an ip as ip_or_url' do
-            let(:ip_or_url) { location.ip }
+          context 'with an ip as address' do
+            let(:address) { location.ip }
 
             run_test!
           end
 
-          context 'with an url as ip_or_url' do
-            let(:ip_or_url) { location.url }
+          context 'with an url as address' do
+            let(:address) { location.url }
 
             run_test!
           end
@@ -78,7 +78,7 @@ RSpec.describe '/api/v1/locations/{ip_or_url}', type: :request do
         end
 
         response '404', 'not found' do
-          let(:ip_or_url) { ['255.255.255.255', 'domain.not.created.com'].sample }
+          let(:address) { ['255.255.255.255', 'domain.not.created.com'].sample }
 
           run_test!
         end

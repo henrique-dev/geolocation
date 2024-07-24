@@ -9,7 +9,7 @@ RSpec.describe Locations::CreateLocationService, type: :service, vcr: { match_re
   end
 
   context 'with valid arguments' do
-    context 'with an url as ip_or_url' do
+    context 'with an url as address' do
       let(:params) { { url: 'www.positrace.com' } }
 
       it 'not have errors creating a location' do
@@ -40,7 +40,7 @@ RSpec.describe Locations::CreateLocationService, type: :service, vcr: { match_re
       end
     end
 
-    context 'with an ip as ip_or_url' do
+    context 'with an ip as address' do
       let(:params) { { ip: '134.201.250.155' } }
 
       it 'not have errors creating a location' do
@@ -97,7 +97,7 @@ RSpec.describe Locations::CreateLocationService, type: :service, vcr: { match_re
       let(:params) { {} }
 
       it 'have errors creating a location' do
-        expect(subject.errors).to eq({ ip_or_url: ['ip or url must be filled'] })
+        expect(subject.errors).to eq({ address: ['ip or url must be filled'] })
         expect(subject.success).to eq(false)
       end
 

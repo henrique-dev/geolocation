@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :locations, param: :ip_or_url, constraints: { ip_or_url: /.*/ }, only: %i[show create destroy]
+      resources :locations, param: :address, constraints: { address: /.*/ }
     end
   end
 end
