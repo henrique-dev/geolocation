@@ -13,6 +13,8 @@ module Locations
         def location(address)
           response = self.class.get("/#{address}", @options)
 
+          raise Errors::ServiceError.new(errors: { provider: ['the data provided is not valid'] }) unless response.ok?
+
           return response unless response.parsed_response[:error].present?
 
           # TODO: send the error for an error tracking application
@@ -26,8 +28,6 @@ module Locations
         def call(location:, address:)
           with_service_handler do
             response = DataProvider.new.location(address)
-
-            raise Errors::ServiceError.new(errors: { provider: ['the data provided is not valid'] }) unless response.ok?
 
             assign_location_attributes(location, address, response.parsed_response)
 
