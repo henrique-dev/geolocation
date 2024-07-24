@@ -2,9 +2,9 @@ name: geolocation-ci-release
 
 on:
   push:
-    branches: [ "develop", "main" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "develop", "main" ]
+    branches: [ "main" ]
 
 env:
   POSTGRES_USER: postgres
