@@ -1,15 +1,17 @@
-name: zeus-ci-release
+name: geolocation-ci-release
 
 on:
   push:
-    tags:
-      - v1.**
+    branches: [ "develop", "main" ]
+  pull_request:
+    branches: [ "develop", "main" ]
 
 env:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
   APPLICATION_PORT: 3000
   APPLICATION_HOST: geolocation_api
+  WEB_CONTAINER_TEST_IMAGE: geolocation:${{ github.sha }}.test
 
 jobs:
   lint:
@@ -55,21 +57,13 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.CI_REGISTRY_USER }}
-          password: ${{ secrets.CI_DEPLOY_PASSWORD }}
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Build
         uses: docker/build-push-action@v5
         with:
-          file: ./Dockerfile.web
-          push: true
+          file: ./Dockerfile
           context: .
-          secrets: |
-            "user_token_github=${{ secrets.USER_TOKEN_GITHUB }}"
           tags: ${{ env.WEB_CONTAINER_TEST_IMAGE }}
 
   # test:
