@@ -84,3 +84,8 @@ To run the tests, use the command:
 ```
 ./bin/dev-test
 ```
+
+To populate the database with locations, you can use the command:
+```
+./bin/dev-populate
+```
