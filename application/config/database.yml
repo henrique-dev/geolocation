@@ -1,0 +1,28 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  host: <%= ENV["DATABASE_DEVELOPMENT_HOST"] %>
+  port: <%= ENV["DATABASE_DEVELOPMENT_PORT"] %>
+  username: <%= ENV["DATABASE_DEVELOPMENT_USER"] %>
+  password: <%= ENV["DATABASE_DEVELOPMENT_PASSWORD"] %>
+  database: geolocation_development
+
+test:
+  <<: *default
+  host: <%= ENV["DATABASE_TEST_HOST"] %>
+  port: <%= ENV["DATABASE_TEST_PORT"] %>
+  username: <%= ENV["DATABASE_TEST_USER"] %>
+  password: <%= ENV["DATABASE_TEST_PASSWORD"] %>
+  database: geolocation_test
+
+production:
+  <<: *default
+  host: <%= ENV["DATABASE_PRODUCTION_HOST"] %>
+  port: <%= ENV["DATABASE_PRODUCTION_PORT"] %>
+  username: <%= ENV["DATABASE_PRODUCTION_USER"] %>
+  password: <%= ENV["DATABASE_PRODUCTION_PASSWORD"] %>
+  database: geolocation_production

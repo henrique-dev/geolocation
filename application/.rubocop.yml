@@ -1,0 +1,69 @@
+AllCops:
+  SuggestExtensions: false
+  Exclude:
+    - 'bin/**/*'
+    - 'config/**/*'
+    - 'db/**/*'
+    - 'log/**/*'
+    - 'public/**/*'
+    - 'storage/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
+    - '**/'
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Layout/LineLength:
+  Enabled: true
+  Max: 140
+  Exclude:
+    - 'spec/**/*'
+    - 'Gemfile'
+
+Metrics/BlockLength:
+  Enabled: true
+  Exclude:
+    - 'spec/**/*'
+    - 'app/contracts/**/*'
+
+Metrics/MethodLength:
+  Enabled: true
+  Max: 20
+
+Naming/VariableNumber:
+  Exclude:
+    - '**/*'
+
+Layout/ArgumentAlignment:
+  Exclude:
+    - '**/*'
+
+Layout/FirstHashElementIndentation:
+  Exclude:
+    - '**/*'
+
+Layout/HashAlignment:
+  Exclude:
+    - '**/*'
+
+Layout/MultilineMethodCallBraceLayout:
+  Exclude:
+    - '**/*'
+
+Metrics/AbcSize:
+  CountRepeatedAttributes: false
+  Max: 25
+
+Metrics/CyclomaticComplexity:
+  Max: 10
+
+Style/Documentation:
+  Exclude:
+    - '**/*'
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+Style/IfUnlessModifier:
+  Enabled: false
