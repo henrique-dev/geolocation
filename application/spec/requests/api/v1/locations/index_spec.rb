@@ -3,6 +3,7 @@ require 'swagger_helper'
 RSpec.describe '/api/v1/locations', type: :request do
   let(:ip) { nil }
   let(:url) { nil }
+  let(:page) { 1 }
   let(:Authorization) { ENV['SERVICE_ACCESS_KEY'] }
 
   before do
@@ -26,6 +27,7 @@ RSpec.describe '/api/v1/locations', type: :request do
 
       parameter name: :ip, in: :query, type: :string
       parameter name: :url, in: :query, type: :string
+      parameter name: :page, in: :query, type: :string
 
       context 'with valid arguments' do
         response '200', 'location found' do
