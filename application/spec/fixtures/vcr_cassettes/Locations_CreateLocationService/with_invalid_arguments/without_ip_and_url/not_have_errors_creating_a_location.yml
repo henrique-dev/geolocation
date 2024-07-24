@@ -1,0 +1,81 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://api.ipstack.com/?access_key=b241466adf5f31eb6b9595a982648a79
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 302
+      message: Moved Temporarily
+    headers:
+      Date:
+      - Wed, 24 Jul 2024 16:52:26 GMT
+      Content-Type:
+      - text/html
+      Content-Length:
+      - '138'
+      Location:
+      - https://apilayer.com?access_key=b241466adf5f31eb6b9595a982648a79
+    body:
+      encoding: UTF-8
+      string: "<html>\r\n<head><title>302 Found</title></head>\r\n<body>\r\n<center><h1>302
+        Found</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n"
+  recorded_at: Wed, 24 Jul 2024 16:52:26 GMT
+- request:
+    method: get
+    uri: https://apilayer.com/?access_key=b241466adf5f31eb6b9595a982648a79
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 403
+      message: Forbidden
+    headers:
+      Date:
+      - Wed, 24 Jul 2024 16:52:26 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=RfFWiRegQznh0gf7QALblqWiQE9Ky6k0yqItdh0bFG%2F23T91OocbneXw7TYta6BzmbUjoDWR4Wl9oVAMGGwt3VpCj6S9dAtpbaGi2QxgI%2FCmM8KXIQeYLKUj8SiHXTY%3D"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Vary:
+      - Accept-Encoding
+      Strict-Transport-Security:
+      - max-age=2592000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 8a856bb41f45605f-YVR
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"success":false,"error":{"code":301,"type":"invalid_fields","info":"One
+        or more invalid fields were specified using the fields parameter."}}'
+  recorded_at: Wed, 24 Jul 2024 16:52:26 GMT
+recorded_with: VCR 6.2.0

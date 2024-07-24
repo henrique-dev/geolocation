@@ -1,0 +1,54 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://api.ipstack.com/134.201.250.155?access_key=b241466adf5f31eb6b9595a982648a79
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Wed, 24 Jul 2024 15:53:06 GMT
+      X-Apilayer-Transaction-Id:
+      - 2e468fd2-ff0f-4b06-9076-ad8781f5942a
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS
+      Access-Control-Allow-Headers:
+      - "*"
+      X-Quota-Limit:
+      - '100'
+      X-Quota-Remaining:
+      - '69'
+      X-Increment-Usage:
+      - '1'
+      X-Request-Time:
+      - '0.047'
+    body:
+      encoding: UTF-8
+      string: '{"ip": "134.201.250.155", "type": "ipv4", "continent_code": "NA", "continent_name":
+        "North America", "country_code": "US", "country_name": "United States", "region_code":
+        "CA", "region_name": "California", "city": "Los Angeles", "zip": "90012",
+        "latitude": 34.0655517578125, "longitude": -118.24053955078125, "location":
+        {"geoname_id": 5368361, "capital": "Washington D.C.", "languages": [{"code":
+        "en", "name": "English", "native": "English"}], "country_flag": "https://assets.ipstack.com/flags/us.svg",
+        "country_flag_emoji": "\ud83c\uddfa\ud83c\uddf8", "country_flag_emoji_unicode":
+        "U+1F1FA U+1F1F8", "calling_code": "1", "is_eu": false}}'
+  recorded_at: Wed, 24 Jul 2024 15:53:06 GMT
+recorded_with: VCR 6.2.0

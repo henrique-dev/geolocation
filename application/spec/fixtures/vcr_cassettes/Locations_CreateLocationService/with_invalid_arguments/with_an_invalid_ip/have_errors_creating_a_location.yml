@@ -1,0 +1,48 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://api.ipstack.com/invalid-ip?access_key=b241466adf5f31eb6b9595a982648a79
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Wed, 24 Jul 2024 17:06:31 GMT
+      X-Apilayer-Transaction-Id:
+      - 7543396a-a888-43da-8737-8cc401218ba1
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS
+      Access-Control-Allow-Headers:
+      - "*"
+      X-Quota-Limit:
+      - '100'
+      X-Quota-Remaining:
+      - '66'
+      X-Increment-Usage:
+      - '1'
+      X-Request-Time:
+      - '0.048'
+    body:
+      encoding: UTF-8
+      string: '{"success":false,"error":{"code":106,"type":"invalid_ip_address","info":"The
+        IP Address supplied is invalid."}}'
+  recorded_at: Wed, 24 Jul 2024 17:06:31 GMT
+recorded_with: VCR 6.2.0

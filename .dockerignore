@@ -35,3 +35,6 @@ application/.byebug_history
 application/.rspec
 application/coverage/*
 !application/coverage/.keep
+
+# docker db volumes
+.postgresdb-data

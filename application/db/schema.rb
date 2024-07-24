@@ -10,8 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 0) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_24_061934) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "locations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "ip", null: false
+    t.string "url"
+    t.string "kind", null: false
+    t.string "continent_code", null: false
+    t.string "continent_name", null: false
+    t.string "country_code", null: false
+    t.string "country_name", null: false
+    t.string "region_code", null: false
+    t.string "region_name", null: false
+    t.string "city", null: false
+    t.string "zip", null: false
+    t.decimal "latitude", precision: 10, scale: 2, null: false
+    t.decimal "longitude", precision: 10, scale: 2, null: false
+    t.string "location"
+    t.string "time_zone"
+    t.string "currency"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ip"], name: "index_locations_on_ip"
+    t.index ["latitude"], name: "index_locations_on_latitude"
+    t.index ["longitude"], name: "index_locations_on_longitude"
+    t.index ["url"], name: "index_locations_on_url"
+  end
 
 end
