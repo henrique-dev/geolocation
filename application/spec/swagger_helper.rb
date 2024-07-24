@@ -35,7 +35,9 @@ RSpec.configure do |config|
           ApiKeyAuth: {
             type: :apiKey,
             in: :header,
-            name: :Authorization
+            name: :Authorization,
+            default: 'some-value',
+            value: 'some-value',
           }
         }
       }
