@@ -11,7 +11,6 @@ env:
   POSTGRES_PASSWORD: postgres
   APPLICATION_PORT: 3000
   APPLICATION_HOST: geolocation_api
-  WEB_CONTAINER_TEST_IMAGE: geolocation:${{ github.sha }}.test
 
 jobs:
   lint:
@@ -79,11 +78,15 @@ jobs:
         with:
           file: ./Dockerfile
           context: .
-          tags: ${{ env.WEB_CONTAINER_TEST_IMAGE }}
+          tags: geolocation:latest
+          outputs: type=docker,dest=/tmp/myimage.tar
       - name: Create connection between services
         run: |
           docker network create backend
           docker network connect backend postgresdb
+      - name: Load the image
+        run: |
+          docker load --input /tmp/myimage.tar
       - name: Create the database
         run: |
           docker run \
@@ -91,7 +94,7 @@ jobs:
             --env-file ../.env-example \
             -p ${{ env.APPLICATION_PORT }}:${{ env.APPLICATION_PORT }} \
             --rm \
-            ${{ env.WEB_CONTAINER_TEST_IMAGE }} \
+            geolocation:latest \
             bundle exec rails db:migrate
       - name: Run tests
         run: |
@@ -100,5 +103,5 @@ jobs:
             --env-file ../.env-example \
             -p ${{ env.APPLICATION_PORT }}:${{ env.APPLICATION_PORT }} \
             --rm \
-            ${{ env.WEB_CONTAINER_TEST_IMAGE }} \
+            geolocation:latest \
             bundle exec rspec spec --fail-fast=1 --format d
