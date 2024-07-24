@@ -44,7 +44,7 @@ RSpec.describe '/api/v1/locations/{ip_or_url}', type: :request do
                           time_zone: { type: :object },
                           currency: { type: :object },
                           created_at: { type: :string },
-                          updated_at: { type: :string },
+                          updated_at: { type: :string }
                         },
                         required: %i[ip url kind continent_code continent_name country_code country_name region_code
                                      region_name city zip latitude longitude location time_zone currency created_at

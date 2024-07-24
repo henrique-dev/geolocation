@@ -37,7 +37,7 @@ RSpec.configure do |config|
             in: :header,
             name: :Authorization,
             default: 'some-value',
-            value: 'some-value',
+            value: 'some-value'
           }
         }
       }

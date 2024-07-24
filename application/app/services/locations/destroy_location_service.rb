@@ -10,7 +10,7 @@ module Locations
 
     def destroy_location(location)
       location.destroy!
-    rescue
+    rescue StandardError
       raise Errors::ServiceError.new(errors: { location: ['could not destroy the location'] })
     end
   end

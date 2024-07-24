@@ -17,7 +17,7 @@ RSpec.describe '/api/v1/locations', type: :request, vcr: { match_requests_on: %i
         type: :object,
         properties: {
           ip: { type: :string },
-          url: { type: :string },
+          url: { type: :string }
         },
         required: %i[]
       }
@@ -51,7 +51,7 @@ RSpec.describe '/api/v1/locations', type: :request, vcr: { match_requests_on: %i
                           time_zone: { type: :object, nullable: true },
                           currency: { type: :object, nullable: true },
                           created_at: { type: :string },
-                          updated_at: { type: :string },
+                          updated_at: { type: :string }
                         },
                         required: %i[ip url kind continent_code continent_name country_code country_name region_code
                                      region_name city zip latitude longitude location time_zone currency created_at
@@ -90,7 +90,7 @@ RSpec.describe '/api/v1/locations', type: :request, vcr: { match_requests_on: %i
                 errors: {
                   type: :object,
                   properties: {
-                    ip_or_url: { type: :array, items: { type: :string } },
+                    ip_or_url: { type: :array, items: { type: :string } }
                   },
                   required: %i[ip_or_url]
                 }
@@ -106,7 +106,7 @@ RSpec.describe '/api/v1/locations', type: :request, vcr: { match_requests_on: %i
                 errors: {
                   type: :object,
                   properties: {
-                    ip: { type: :array, items: { type: :string } },
+                    ip: { type: :array, items: { type: :string } }
                   },
                   required: %i[ip]
                 }
@@ -124,7 +124,7 @@ RSpec.describe '/api/v1/locations', type: :request, vcr: { match_requests_on: %i
                 errors: {
                   type: :object,
                   properties: {
-                    url: { type: :array, items: { type: :string } },
+                    url: { type: :array, items: { type: :string } }
                   },
                   required: %i[url]
                 }
