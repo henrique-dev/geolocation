@@ -3,11 +3,7 @@
 script_root_dir="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 PROJECT_DIR="$(dirname $script_root_dir)"
 
-if ! command -v docker-compose &> /dev/null
-then
-  echo "You need docker-compose to run this script"
-  exit 1
-fi
+source "$script_root_dir/utils/docker.sh"
 
-docker-compose -f "$PROJECT_DIR/docker-compose.yml" -p geolocation --project-directory $PROJECT_DIR down
-docker-compose -f "$PROJECT_DIR/docker-compose.yml" -p geolocation --project-directory $PROJECT_DIR build
+$docker_command -f "$PROJECT_DIR/docker-compose.yml" -p geolocation --project-directory $PROJECT_DIR down
+$docker_command -f "$PROJECT_DIR/docker-compose.yml" -p geolocation --project-directory $PROJECT_DIR build
